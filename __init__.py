@@ -42,7 +42,7 @@ def json_increment(file: str, key: str) -> int:
     with open(file, "w") as f:
         f.write(json.dumps(content))
 
-    return content
+    return content[key]
 
 
 def json_get_count(file: str, key: str) -> int:
