@@ -3,6 +3,8 @@ from discord import app_commands
 from discord.ext import commands
 import json
 import os
+import requests
+import datetime as dt
 
 with open(".token", "r") as f:
     TOKEN = f.read()
@@ -87,6 +89,16 @@ async def samscount(interaction: discord.Interaction, user: discord.Member):
     count = json_get_count(FILE_SAMS, user.mention)
     await interaction.response.send_message("<:okak:1336034690380857476>")
     await interaction.channel.send(f"{user.name} hat schon {count} Mal{'e' if count != 1 else ''} das Sams zitiert!")
+
+
+@bot.tree.command(name="metar", description="Wie ist das Wetter?")
+async def metar(interaction: discord.Interaction, icao: str):
+    response = requests.get(f"https://aviationweather.gov/api/data/metar?ids={icao}&format=raw&taf=true&date={dt.datetime.now().strftime('%Y-%m-%d')}")
+
+    if response.status_code == 200:
+        await interaction.response.send_message(f"```METAR {response.text}```")
+    else:
+        await interaction.response.send_message("Föhler")
 
 
 bot.run(TOKEN)
