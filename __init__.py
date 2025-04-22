@@ -1,3 +1,4 @@
+import random
 import discord
 from discord import app_commands
 from discord.ext import commands
@@ -99,6 +100,29 @@ async def metar(interaction: discord.Interaction, icao: str):
         await interaction.response.send_message(f"```METAR {response.text}```")
     else:
         await interaction.response.send_message("Föhler")
+
+
+@bot.tree.command(name="eval", description="Portables Python?")
+async def __eval(interaction: discord.Interaction, statement: str):
+    try:
+        await interaction.response.send_message(eval(statement))
+    except Exception as e:
+        await interaction.response.send_message(str(e))
+
+
+@bot.tree.command(name="flip", description="я покажу тебѣ что-то")
+async def flip(interaction: discord.Interaction):
+    result = random.random()
+    output = "Zahl" if result < 0.5 else "Kopf"
+    await interaction.response.send_message(output)
+
+
+@bot.tree.command(name="randint", description="nyeh heh heh")
+async def randint(interaction: discord.Interaction, a: int, b: int):
+    try:
+        await interaction.response.send_message(random.randint(a, b))
+    except Exception as e:
+        await interaction.response.send_message(str(e))
 
 
 bot.run(TOKEN)
