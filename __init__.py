@@ -105,7 +105,7 @@ async def metar(interaction: discord.Interaction, icao: str):
 @bot.tree.command(name="eval", description="Portables Python?")
 async def __eval(interaction: discord.Interaction, statement: str):
     try:
-        await interaction.response.send_message(f"```\>\>\> {statement}\n{eval(statement)}```")
+        await interaction.response.send_message(f"```>>> {statement}\n{eval(statement)}```")
     except Exception as e:
         await interaction.response.send_message(f"```{str(e)}```")
 
